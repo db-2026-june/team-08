@@ -11,7 +11,7 @@
 //
 //  2. Кожен учасник команди підписує таблиці, які він створював:
 //
-//     [Ім'я] — назви таблиць через кому
+//     [Ivan Butryn] — Inventory, Suppliers, SupplierContacts
 //     [Ім'я] — назви таблиць через кому
 //     [Ім'я] — назви таблиць через кому
 //
@@ -36,3 +36,30 @@
 
 
 // Вставте ваш DBML-код нижче 👇
+
+Table Inventory {
+  inventory_id int [pk]
+  ingredient_id int [ref: > Ingredients.ingredient_id]
+  supplier_id int [ref: > Suppliers.supplier_id]
+  location_id int [ref: > Locations.location_id]
+  quantity int
+  unit_cost decimal
+  purchase_date date
+  expiration_date date
+}
+
+Table Suppliers {
+  supplier_id int [pk]
+  supplier_name varchar
+  country varchar
+  city varchar
+  street_address varchar
+}
+
+Table SupplierContacts {
+  contact_id int [pk]
+  supplier_id int [ref: > Suppliers.supplier_id]
+  contact_name varchar
+  phone_number varchar
+  email varchar
+}
