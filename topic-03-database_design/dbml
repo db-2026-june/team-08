@@ -12,7 +12,7 @@
 //  2. Кожен учасник команди підписує таблиці, які він створював:
 //
 //     [Ivan Butryn] — Inventory, Suppliers, SupplierContacts
-//     [Ім'я] — назви таблиць через кому
+//     [Khrystyna Shopiak] — Ingredients, MenuIngredients, MenuItems, MenuCategories, LocationIngredients
 //     [Ім'я] — назви таблиць через кому
 //
 //  4. У цьому файлі додайте DBML-код вашої схеми.
@@ -62,4 +62,35 @@ Table SupplierContacts {
   contact_name varchar
   phone_number varchar
   email varchar
+}
+
+Table Ingredients {
+  ingredient_id int [pk]
+  ingredient_name varchar(50)
+  unit varchar(20)
+}
+
+Table MenuIngredients {
+  ingredient_id int [pk, ref: > Ingredients.ingredient_id]
+  item_id int [pk, ref: > MenuItems.item_id]
+  quantity decimal(8,2)
+}
+
+Table MenuItems {
+  item_id int [pk]
+  dish_name varchar(100)
+  price decimal(8,2)
+  preparation_time int
+  category_id int [ref: > MenuCategories.category_id]
+}
+
+Table MenuCategories {
+  category_id int [pk]
+  category_name varchar(50)
+}
+
+Table LocationIngredients{
+  location_id int [pk, ref: > Locations.location_id]
+  ingredient_id int [pk, ref: > Ingredients.ingredient_id]
+  stock_quantity decimal(8,2)
 }
