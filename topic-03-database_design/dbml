@@ -14,6 +14,7 @@
 //     [Brytan Vitalii] — Locations, Staff, StaffShifts, Shifts
 //     [Ivan Butryn] — Inventory, Suppliers, SupplierContacts
 //     [Khrystyna Shopiak] — Ingredients, MenuIngredients, MenuItems, MenuCategories, LocationIngredients
+       [Ivannikov Mykhailo] - Orders, Reservations, Tables, TablesReservation, OrderItem
 //     [Ім'я] — назви таблиць через кому
 //
 //  4. У цьому файлі додайте DBML-код вашої схеми.
@@ -126,4 +127,49 @@ Table LocationIngredients{
   location_id int [pk, ref: > Locations.location_id]
   ingredient_id int [pk, ref: > Ingredients.ingredient_id]
   stock_quantity decimal(8,2)
+}
+
+Table Orders{
+  order_id int [PK]
+  number int [not null]
+  type varchar(50) [not null]
+  status varchar(50) [not null]
+  created_at time
+  location_id int [not null, ref: > Locations.location_id ]
+  customer_id int [not null, ref: > Customers.customer_id]
+}
+
+Table Reservations{
+  reservation_id int [PK]
+  reservation_time time
+  reservation_date date
+  status varchar(50)
+  location_id int [not null, ref: > Locations.location_id]
+  customer_id int [not null, ref: > Customers.customer_id]
+}
+
+Table OrderItem{
+  order_id int [PK, ref: > Orders.order_id]
+  item_id int [PK, ref: > MenuItems.item_id]
+  quantity int [not null]
+}
+
+Table Tables{
+  table_id int [PK]
+  number int [not null]
+  capacity int
+  location_id int [not null, ref: > Locations.location_id]
+}
+
+Table TablesReservation{
+  table_id int [PK, ref: > Tables.table_id]
+  reservation_id int [PK, ref: > Reservations.reservation_id]
+}
+
+Table Customers{
+  customer_id int [PK]
+
+
+
+  
 }
