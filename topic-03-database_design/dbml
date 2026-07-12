@@ -98,34 +98,34 @@ Table SupplierContacts {
   email varchar
 }
 
-Table Ingredients {
+Table ingredients {
   ingredient_id int [pk]
-  ingredient_name varchar(50)
-  unit varchar(20)
+  ingredient_name varchar(50)  [not null]
+  unit varchar(20)  [not null]
 }
 
-Table MenuIngredients {
-  ingredient_id int [pk, ref: > Ingredients.ingredient_id]
-  item_id int [pk, ref: > MenuItems.item_id]
+Table menu_ingredients {
+  ingredient_id int [pk, ref: > ingredients.ingredient_id]
+  item_id int [pk, ref: > menu_items.item_id]
   quantity decimal(8,2)
 }
 
-Table MenuItems {
+Table menu_items {
   item_id int [pk]
-  dish_name varchar(100)
-  price decimal(8,2)
-  preparation_time int
-  category_id int [ref: > MenuCategories.category_id]
+  dish_name varchar(100)  [not null]
+  price decimal(8,2)  [not null]
+  preparation_time int  [not null]
+  category_id int [not null, ref: > menu_categories.category_id]
 }
 
-Table MenuCategories {
+Table menu_categories {
   category_id int [pk]
   category_name varchar(50)
 }
 
-Table LocationIngredients{
-  location_id int [pk, ref: > Locations.location_id]
-  ingredient_id int [pk, ref: > Ingredients.ingredient_id]
+Table location_ingredients{
+  location_id int [pk, ref: > locations.location_id]
+  ingredient_id int [pk, ref: > ingredients.ingredient_id]
   stock_quantity decimal(8,2)
 }
 
