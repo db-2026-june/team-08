@@ -8,13 +8,13 @@
 | Учасник | Роль у команді | Що зроблено | Артефакти / файли |
 |----------|----------------|-------------|-------------------|
 | Brytan Vitalii | Управління ресторанами та персоналом | Locations, Staff, Shifts, StaffShifts | dbml, TEAMWORK.md |
-| ... | ... | ... | ... |
+| Shopiak Khrystyna | Меню та інгредієнти | Ingredients, MenuIngredients, MenuItems, MenuCategories, LocationIngredients | dbml, TEAMWORK.md |
 | ... | ... | ... | ... |
 | ... | ... | ... | ... |
 
 ## Контекст теми
 Brytan Vitalii: Зв'язки між ресторанами та персоналом; Ролі працівників; Графіки роботи.
-
+Shopiak Khrystyna: Категорії меню; Страви; Час приготування; Ціну; Склад страв.
 ...
 
 (Опишіть, хто за яку частину відповідав.)
