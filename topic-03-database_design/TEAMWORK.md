@@ -8,7 +8,7 @@
 | Учасник | Роль у команді | Що зроблено | Артефакти / файли |
 |----------|----------------|-------------|-------------------|
 | Brytan Vitalii | Управління ресторанами та персоналом | Locations, Staff, Shifts, StaffShifts | dbml, TEAMWORK.md |
-| Shopiak Khrystyna | Меню та інгредієнти | Ingredients, MenuIngredients, MenuItems, MenuCategories, LocationIngredients | dbml, TEAMWORK.md |
+| Shopiak Khrystyna | Меню та інгредієнти | ingredients, menu_ingredients, menu_items, menu_categories, location_ingredients | dbml, TEAMWORK.md |
 | ... | ... | ... | ... |
 | ... | ... | ... | ... |
 
