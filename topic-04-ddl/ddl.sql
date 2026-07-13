@@ -62,8 +62,8 @@ CREATE TABLE rest_manag.shifts(
 );
 
 CREATE TABLE rest_manag.staff_shifts(
-  staff_id bigint REFERENCES rest_manag.staff(staff_id),
-  shift_id bigint REFERENCES rest_manag.shifts(shift_id),
+  staff_id bigint NOT NULL REFERENCES rest_manag.staff(staff_id) ON DELETE CASCADE,
+  shift_id bigint NOT NULL REFERENCES rest_manag.shifts(shift_id) ON DELETE CASCADE,
 
   PRIMARY KEY (staff_id, shift_id)
 );
