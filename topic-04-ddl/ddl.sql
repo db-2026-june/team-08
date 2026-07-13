@@ -27,4 +27,57 @@
 
 -- Add your DDL below this line
 
+CREATE SCHEMA rest_manag;
 
+-- [Khrystyna] - ingredients, menu_categories, menu_items, menu_ingredients tables and indexes
+
+CREATE TABLE rest_manag.ingredients(
+  ingredient_id bigserial PRIMARY KEY,
+  ingredient_name varchar(50) NOT NULL,
+  unit varchar(20) NOT NULL
+);
+
+
+CREATE TABLE rest_manag.menu_categories (
+  category_id bigserial PRIMARY KEY, 
+  category_name varchar(50) NOT NULL
+);
+
+
+CREATE TABLE rest_manag.menu_items (
+  item_id bigserial PRIMARY KEY,
+  dish_name varchar(100) NOT NULL,
+  price decimal(8,2) NOT NULL CHECK (price > 0),
+  preparation_time int NOT NULL CHECK (preparation_time > 0),
+  category_id bigint NOT NULL 
+    REFERENCES rest_manag.menu_categories(category_id)
+);
+
+
+CREATE TABLE rest_manag.menu_ingredients(
+  ingredient_id bigint NOT NULL 
+    REFERENCES rest_manag.ingredients(ingredient_id),
+  
+  item_id bigint NOT NULL 
+    REFERENCES rest_manag.menu_items(item_id),
+  
+  quantity decimal(8,2) NOT NULL CHECK (quantity > 0),
+
+  PRIMARY KEY (ingredient_id, item_id)
+);
+
+CREATE TABLE rest_manag.location_ingredients (
+  location_id bigint NOT NULL
+  REFERENCES rest_manag.locations(location_id),
+  ingredient_id bigint NOT NULL
+  REFERENCES rest_manag.ingredients (ingredient_id),
+  stock_quantity decimal(8,2) NOT NULL CHECK (stock_quantity >= 0),
+
+  PRIMARY KEY (location_id, ingredient_id)
+);
+
+CREATE INDEX idx_menu_items_category
+ON rest_manag.menu_items(category_id);
+
+CREATE INDEX idx_location_ingredients_location
+ON rest_manag.location_ingredients(location_id);
