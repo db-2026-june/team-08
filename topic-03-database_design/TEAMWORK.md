@@ -13,10 +13,20 @@
 | Shyshka Tymofii | Клієнти та відгуки | Customers, Reviews | dbml, TEAMWORK.md |
 
 ## Контекст теми
+Опишіть, хто за яку частину відповідав.
+|----------|----------------|-------------|-------------------|
+| Brytan Vitalii | Управління ресторанами та персоналом | locations, staff, shifts, staff_shifts | dbml, TEAMWORK.md |
+| Shopiak Khrystyna | Меню та інгредієнти | ingredients, menu_ingredients, menu_items, menu_categories, location_ingredients | dbml, TEAMWORK.md |
+| Ivannikov Mykhailo | Замовлення та бронювання | Orders, Reservations, OrderItem, Tables, TablesReservation | dbml, TEAMWORK.md |
+| Shyshka Tymofii | Клієнти та відгуки | Customers, Reviews | dbml, TEAMWORK.md |
+| Ivan Butryn | Інвентар та постачальники | Inventory, Suppliers, SupplierContacts | dbml, TEAMWORK.md |
+
+## Контекст теми
 Brytan Vitalii: Зв'язки між ресторанами та персоналом; Ролі працівників; Графіки роботи.
 Shopiak Khrystyna: Категорії меню; Страви; Час приготування; Ціну; Склад страв.
 Ivannikov Mykhailo: Замовлення, Бронювання місць, Столи, Зв'язок між бронюванням та столом, Зв'язок між замовленням та меню.
 Shyshka Tymofii: Клієнти, Відгуки, Зв’язок між клієнтом і відгуком, Зв’язок між відгуком і локацією, Зв’язок клієнта з бронюваннями та замовленнями
+Ivan Butryn: Управління інвентарем; Інформація стосовно постачальників; Звʼязок з постачальниками
 ...
 
 (Опишіть, хто за яку частину відповідав.)
