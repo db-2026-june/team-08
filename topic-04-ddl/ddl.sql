@@ -115,6 +115,33 @@ CREATE TABLE rest_manag.location_ingredients (
   PRIMARY KEY (location_id, ingredient_id)
 );
 
+-- [Butryn Ivan]
+CREATE TABLE rest_manag.ingredients (
+    ingredient_id bigserial PRIMARY KEY,
+    ingredient_name varchar(100) NOT NULL,
+    unit varchar(30) NOT NULL
+);
+
+CREATE TABLE rest_manag.suppliers (
+    supplier_id bigserial PRIMARY KEY,
+    supplier_name varchar(150) NOT NULL,
+    country varchar(100),
+    city varchar(100),
+    street_address varchar(255)
+);
+
+CREATE TABLE rest_manag.supplier_contacts (
+    contact_id bigserial PRIMARY KEY,
+    supplier_id bigint NOT NULL,
+    contact_name varchar(100) NOT NULL,
+    phone_number varchar(20),
+    email varchar(150),
+
+    CONSTRAINT fk_supplier_contacts_supplier
+        FOREIGN KEY (supplier_id)
+        REFERENCES rest_manag.suppliers(supplier_id)
+);
+
 -- [Shyshka Tymofii]
 CREATE TABLE rest_manag.customers (
     customer_id bigserial,
@@ -173,6 +200,9 @@ ON rest_manag.menu_items(category_id);
 
 CREATE INDEX idx_location_ingredients_location
 ON rest_manag.location_ingredients(location_id);
+
+CREATE INDEX idx_supplier_contacts_supplier
+ON rest_manag.supplier_contacts(supplier_id);
 
 CREATE INDEX idx_reviews_customer
 ON rest_manag.reviews(customer_id);
