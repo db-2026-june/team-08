@@ -10,7 +10,7 @@
 | Brytan Vitalii | Управління ресторанами та персоналом | locations, staff, shifts, staff_shifts | dbml, TEAMWORK.md |
 | Shopiak Khrystyna | Меню та інгредієнти | ingredients, menu_ingredients, menu_items, menu_categories, location_ingredients | dbml, TEAMWORK.md |
 | Ivannikov Mykhailo | Замовлення та бронювання | Orders, Reservations, OrderItem, Tables, TablesReservation | dbml, TEAMWORK.md |
-| Ivan Butryn | Інвентар та постачальники | Inventory, Suppliers, SupplierContacts | dbml, TEAMWORK.md |
+| Ivan Butryn | Інвентар та Постачальники | Inventory, Suppliers, SupplierContacts | dbml, TEAMWORK.md |
 | Shyshka Tymofii | Клієнти та відгуки | Customers, Reviews | dbml, TEAMWORK.md |
 
 
