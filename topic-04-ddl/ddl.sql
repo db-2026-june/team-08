@@ -116,7 +116,7 @@ CREATE TABLE rest_manag.location_ingredients (
 );
 
 -- [Butryn Ivan]
-CREATE TABLE rest_manag.ingredients (
+CREATE TABLE rest_manag.inventory (
     ingredient_id bigserial PRIMARY KEY,
     ingredient_name varchar(100) NOT NULL,
     unit varchar(30) NOT NULL
