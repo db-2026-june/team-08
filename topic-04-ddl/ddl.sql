@@ -30,7 +30,7 @@
 -- [Khrystyna] - ingredients, menu_categories, menu_items, menu_ingredients tables and indices
 -- [Shyshka Tymofii] - customers, reviews tables and indices
 -- [Butryn Ivan] - inventory, suppliers, supplier_contacts
-
+-- [Ivannikov Mykhailo] - orders, reservations, order_item, tables, tables_reservation
 CREATE SCHEMA rest_manag;
 
 -- [BrytanVitalii]
@@ -189,6 +189,57 @@ CREATE TABLE rest_manag.reviews (
         CHECK (rating BETWEEN 1 AND 5)
 );
 
+-- [Ivannikov Mykhailo]
+
+CREATE TABLE rest_manag.orders (
+    order_id bigserial PRIMARY KEY,
+
+    order_number bigint NOT NULL,
+    order_type varchar(50) NOT NULL,
+    order_status varchar(50) NOT NULL,
+    created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    location_id bigint NOT NULL REFERENCES rest_manag.locations(location_id),
+    customer_id bigint NOT NULL REFERENCES rest_manag.customers(customer_id)
+);
+
+CREATE TABLE rest_manag.reservations (
+
+  reservation_id bigserial PRIMARY KEY,
+  reservation_time time NOT NULL,
+  reservation_date date NOT NULL,
+  reservation_status varchar(50),
+  location_id bigint NOT NULL REFERENCES rest_manag.locations(location_id),
+  customer_id bigint NOT NULL REFERENCES rest_manag.customers(customer_id)
+
+);
+
+CREATE TABLE rest_manag.order_item (
+  
+  order_id bigint NOT NULL REFERENCES rest_manag.orders(order_id) ON DELETE CASCADE,
+  item_id bigint NOT NULL REFERENCES rest_manag.menu_items(item_id) ON DELETE CASCADE,
+  quantity int NOT NULL CHECK (quantity >= 0),
+  PRIMARY KEY (order_id, item_id)
+
+);
+
+CREATE TABLE rest_manag.tables (
+
+  table_id bigserial PRIMARY KEY,
+  table_number bigint NOT NULL,
+  capacity int CHECK (capacity > 0),
+  location_id bigint NOT NULL REFERENCES rest_manag.locations(location_id)
+
+);
+
+CREATE TABLE rest_manag.tables_reservation (
+  
+  table_id bigint NOT NULL REFERENCES rest_manag.tables(table_id) ON DELETE CASCADE,
+  reservation_id bigint NOT NULL REFERENCES rest_manag.reservations(reservation_id) ON DELETE CASCADE,
+  PRIMARY KEY (table_id, reservation_id)
+
+);
+
+
 -- indices
 CREATE INDEX idx_staff_location
 ON rest_manag.staff(location_id);
@@ -210,3 +261,6 @@ ON rest_manag.reviews(customer_id);
 
 CREATE INDEX idx_reviews_location
 ON rest_manag.reviews(location_id);
+
+CREATE INDEX idx_tables_location 
+ON rest_manag.tables(location_id);
