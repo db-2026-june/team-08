@@ -117,6 +117,14 @@ CREATE TABLE rest_manag.location_ingredients (
 );
 
 -- [Butryn Ivan]
+CREATE TABLE rest_manag.suppliers (
+    supplier_id bigserial PRIMARY KEY,
+    supplier_name varchar(150) NOT NULL,
+    country varchar(100),
+    city varchar(100),
+    street_address varchar(255)
+);
+
 CREATE TABLE rest_manag.inventory (
     inventory_id BIGSERIAL PRIMARY KEY,
     ingredient_id BIGINT NOT NULL REFERENCES rest_manag.ingredients(ingredient_id),
@@ -126,14 +134,6 @@ CREATE TABLE rest_manag.inventory (
     unit_cost NUMERIC(10,2) NOT NULL,
     purchase_date DATE NOT NULL,
     expiration_date DATE
-);
-
-CREATE TABLE rest_manag.suppliers (
-    supplier_id bigserial PRIMARY KEY,
-    supplier_name varchar(150) NOT NULL,
-    country varchar(100),
-    city varchar(100),
-    street_address varchar(255)
 );
 
 CREATE TABLE rest_manag.supplier_contacts (
