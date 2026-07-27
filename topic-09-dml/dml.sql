@@ -180,3 +180,238 @@ WHERE item_id = 4;
 -- are referenced by menu_ingredients through foreign key constraints.
 
 --END SHOPIAK KHRYSTYNA
+
+
+-- SHYSHKA TYMOFII - customers and reviews
+-- Customers
+-- Eleven customers are inserted
+-- One temporary customer is deleted later, leaving ten records
+
+INSERT INTO rest_manag.customers (
+  first_name,
+  last_name,
+  email,
+  phone_number
+) VALUES 
+('Olena', 'Koval', 'olena.koval@example.com', '+380000000001'),
+('Andrii', 'Melnyk', 'andrii.melnyk@example.com', '+380000000002'),
+('Sofiia', 'Bondar', 'sofiia.bondar@example.com', '+380000000003'),
+('Maksym', 'Tkachenko', 'maksym.tkachenko@example.com', '+380000000004'),
+('Iryna', 'Shevchenko', 'iryna.shevchenko@example.com', '+380000000005'),
+('Dmytro', 'Kravchenko', 'dmytro.kravchenko@example.com', '+380000000006'),
+('Kateryna', 'Moroz', 'kateryna.moroz@example.com', '+380000000007'),
+('Artem', 'Polishchuk', 'artem.polishchuk@example.com', '+380000000008'),
+('Viktoriia', 'Savchenko', 'viktoriia.savchenko@example.com', '+380000000009'),
+('Bohdan', 'Rudenko', 'bohdan.rudenko@example.com', '+380000000010'),
+('Test', 'Customer', 'temporary.customer@example.com', NULL);
+
+-- Reviews
+-- Locations must be inserted before this section
+-- Eleven reviews are inserted
+-- One duplicate test review is deleted later, leaving ten records
+
+INSERT INTO rest_manag.reviews (
+  customer_id,
+  location_id,
+  rating,
+  comment,
+  review_date
+) VALUES
+(
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE email = 'olena.koval@example.com'
+    ),
+    (
+        SELECT MIN(location_id)
+        FROM rest_manag.locations
+    ),
+    5,
+    'Excellent food and very attentive staff.',
+    '2026-06-02 18:30:00'
+),
+(
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE email = 'andrii.melnyk@example.com'
+    ),
+    (
+        SELECT MIN(location_id)
+        FROM rest_manag.locations
+    ),
+    4,
+    'Good food and friendly service.',
+    '2026-06-04 19:15:00'
+),
+(
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE email = 'sofiia.bondar@example.com'
+    ),
+    (
+        SELECT MAX(location_id)
+        FROM rest_manag.locations
+    ),
+    5,
+    'The desserts were especially delicious.',
+    '2026-06-08 16:45:00'
+),
+(
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE email = 'maksym.tkachenko@example.com'
+    ),
+    (
+        SELECT MIN(location_id)
+        FROM rest_manag.locations
+    ),
+    3,
+    'The meal was good, but the waiting time was long.',
+    '2026-06-11 20:10:00'
+),
+(
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE email = 'iryna.shevchenko@example.com'
+    ),
+    (
+        SELECT MAX(location_id)
+        FROM rest_manag.locations
+    ),
+    4,
+    'Comfortable atmosphere and a varied menu.',
+    '2026-06-15 17:20:00'
+),
+(
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE email = 'dmytro.kravchenko@example.com'
+    ),
+    (
+        SELECT MIN(location_id)
+        FROM rest_manag.locations
+    ),
+    2,
+    'The order arrived later than expected.',
+    '2026-06-19 21:05:00'
+),
+(
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE email = 'kateryna.moroz@example.com'
+    ),
+    (
+        SELECT MAX(location_id)
+        FROM rest_manag.locations
+    ),
+    5,
+    'Great restaurant for a family dinner.',
+    '2026-06-23 18:50:00'
+),
+(
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE email = 'artem.polishchuk@example.com'
+    ),
+    (
+        SELECT MIN(location_id)
+        FROM rest_manag.locations
+    ),
+    4,
+    'The main course was fresh and well prepared.',
+    '2026-06-28 19:40:00'
+),
+(
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE email = 'viktoriia.savchenko@example.com'
+    ),
+    (
+        SELECT MAX(location_id)
+        FROM rest_manag.locations
+    ),
+    5,
+    'Professional staff and excellent presentation.',
+    '2026-07-03 15:30:00'
+),
+(
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE email = 'bohdan.rudenko@example.com'
+    ),
+    (
+        SELECT MIN(location_id)
+        FROM rest_manag.locations
+    ),
+    3,
+    NULL,
+    '2026-07-07 20:25:00'
+),
+(
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE email = 'olena.koval@example.com'
+    ),
+    (
+        SELECT MIN(location_id)
+        FROM rest_manag.locations
+    ),
+    5,
+    'Duplicate test review.',
+    '2026-07-08 10:00:00'
+);
+
+
+-- UPDATE examples
+
+-- Customer changed their phone number
+
+UPDATE rest_manag.customers
+SET phone_number = '+380000000099'
+WHERE email = 'olena.koval@example.com';
+
+-- A customer updated their review
+
+UPDATE rest_manag.reviews
+SET
+    rating = 5,
+    comment = 'Good food, friendly service and excellent customer support'
+WHERE customer_id = (
+    SELECT customer_id
+    FROM rest_manag.customers
+    WHERE email = 'andrii.melnyk@example.com'
+)
+AND comment = 'Good food and friendly service.';
+
+
+-- DELETE examples
+
+-- Remove an accidental duplicate test review
+
+DELETE FROM rest_manag.reviews
+WHERE customer_id = (
+    SELECT customer_id
+    FROM rest_manag.customers
+    WHERE email = 'olena.koval@example.com'
+)
+AND comment = 'Duplicate test review.';
+
+-- Delete a temporary customer who has no related reviews, reservations or orders
+
+DELETE FROM rest_manag.customers
+WHERE email = 'temporary.customer@example.com';
+
+-- Customers with related reviews cannot be deleted because reviews.customer_id uses ON DELETE RESTRICT.
+
+-- END Shyshka Tymofii
