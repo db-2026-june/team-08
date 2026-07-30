@@ -562,3 +562,571 @@ WHERE email = 'temporary.customer@example.com';
 -- Customers with related reviews cannot be deleted because reviews.customer_id uses ON DELETE RESTRICT.
 
 -- END Shyshka Tymofii
+
+-- IVANNIKOV MYKHAILO
+
+-- orders
+
+    -- possible status: New, Preparing, Ready, Delivery, Comleted, Cancelled
+    -- possible types: Dine-in, Takeout, Delivery
+    -- order_numer is not necessarily unique, it can repeat in different locations
+
+INSERT INTO rest_manag.orders (
+    order_number, 
+    order_type, 
+    order_status, 
+    created_at, 
+    location_id, 
+    customer_id
+) VALUES 
+(
+    1, 
+    'Takeout', 
+    'Completed',
+    '2026-05-01 14:30:00+03', 
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Київ Центр'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000007'
+    )
+
+),(
+    2, 
+    'Delivery', 
+    'Cancelled',
+    '2026-07-10 15:00:00+03', 
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Одеса Порт'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000005'
+    )
+
+),(
+    3, 
+    'Delivery', 
+    'Completed',
+    '2026-07-10 19:30:00+03', 
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Харків Центральний'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000007'
+    )
+
+),(
+    4, 
+    'Dine-in', 
+    'Completed',
+    '2026-07-22 15:58:00+03', 
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Харків Центральний'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000003'
+    )
+
+),(
+    5, 
+    'Takeout', 
+    'Preparing',
+    '2026-07-30 14:30:00+03', 
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Харків Центральний'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000002'
+    )
+
+),(
+    6, 
+    'Delivery', 
+    'Preparing',
+    '2026-07-30 12:33:00+03', 
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Вінниця Центр'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000009'
+    )
+
+),(
+    7, 
+    'Dine-in', 
+    'Completed',
+    '2026-07-29 12:30:00+03', 
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Запоріжжя Молл'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000004'
+    )
+
+),(
+    1, 
+    'Takeout', 
+    'Preparing',
+    '2026-07-30 17:30:00+03', 
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Полтава Маркет'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000005'
+    )
+
+),(
+    3, 
+    'Delivery', 
+    'Completed',
+    '2026-07-28 14:30:00+03', 
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Дніпро Сіті'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000007'
+    )
+
+),(
+    112, 
+    'Delivery', 
+    'New',
+    '2026-07-30 16:25:00+03', 
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Чернігів Плаза'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000004'
+    )
+
+),(
+    25, 
+    'Takeout', 
+    'Ready',
+    '2026-07-30 14:30:00+03', 
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Івано-Франківськ Центр'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000006'
+    )
+
+);
+
+INSERT INTO rest_manag.tables (
+    table_number, 
+    capacity, 
+    location_id
+) VALUES
+(
+    1,
+    4,
+    (
+        SELECT location_id 
+        FROM rest_manag.locations
+        WHERE location_name = 'Івано-Франківськ Центр'
+    )
+),(
+    2,
+    4,
+    (
+        SELECT location_id 
+        FROM rest_manag.locations
+        WHERE location_name = 'Івано-Франківськ Центр'
+    )
+),(
+    1,
+    2,
+    (
+        SELECT location_id 
+        FROM rest_manag.locations
+        WHERE location_name = 'Запоріжжя Молл'
+    )
+),(
+    1,
+    2,
+    (
+        SELECT location_id 
+        FROM rest_manag.locations
+        WHERE location_name = 'Львів Плаза'
+    )
+),(
+    1,
+    4,
+    (
+        SELECT location_id 
+        FROM rest_manag.locations
+        WHERE location_name = 'Київ Центр'
+    )
+),(
+    2,
+    4,
+    (
+        SELECT location_id 
+        FROM rest_manag.locations
+        WHERE location_name = 'Київ Центр'
+    )
+),(
+    1,
+    2,
+    (
+        SELECT location_id 
+        FROM rest_manag.locations
+        WHERE location_name = 'Одеса Порт'
+    )
+),(
+    2,
+    4,
+    (
+        SELECT location_id 
+        FROM rest_manag.locations
+        WHERE location_name = 'Одеса Порт'
+    )
+),(
+    1,
+    4,
+    (
+        SELECT location_id 
+        FROM rest_manag.locations
+        WHERE location_name = 'Чернігів Плаза'
+    )
+),(
+    2,
+    4,
+    (
+        SELECT location_id 
+        FROM rest_manag.locations
+        WHERE location_name = 'Чернігів Плаза'
+    )
+),(
+    3,
+    2,
+    (
+        SELECT location_id 
+        FROM rest_manag.locations
+        WHERE location_name = 'Чернігів Плаза'
+    )
+),(
+    1,
+    4,
+    (
+        SELECT location_id 
+        FROM rest_manag.locations
+        WHERE location_name = 'Харків Центральний'
+    )
+);
+
+-- reservations
+-- possible reservation status Pending, Confirmed, Seated, Cancelled
+
+INSERT INTO rest_manag.reservations (
+    reservation_time,
+    reservation_date,
+    reservation_status,
+    location_id,
+    customer_id
+) VALUES
+(
+    '12:30:00',
+    '2026-07-30',
+    'Pending',
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Івано-Франківськ Центр'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000006'
+    )
+),(
+    '16:45:00',
+    '2026-07-30',
+    'Confirmed',
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Івано-Франківськ Центр'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000007'
+    )
+),(
+    '16:45:00',
+    '2026-07-30',
+    'Confirmed',
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Івано-Франківськ Центр'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000007'
+    )
+),(
+    '17:30:00',
+    '2026-07-30',
+    'Confirmed',
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Київ Центр'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000005'
+    )
+),(
+    '18:20:00',
+    '2026-07-30',
+    'Seated',
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Одеса Порт'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000006'
+    )
+),(
+    '11:45:00',
+    '2026-07-29',
+    'Cancelled',
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Одеса Порт'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000006'
+    )
+),(
+    LOCALTIME + INTERVAL '1 hour',
+    CURRENT_DATE,
+    'Confirmed',
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Харків Центральний'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000006'
+    )
+),(
+    LOCALTIME + INTERVAL '2 hour',
+    CURRENT_DATE,
+    'Confirmed',
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Запоріжжя Молл'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000002'
+    )
+),(
+    LOCALTIME + INTERVAL '2 hour',
+    CURRENT_DATE + INTERVAL '1 day',
+    'Confirmed',
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Запоріжжя Молл'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000002'
+    )
+),(
+    LOCALTIME,
+    CURRENT_DATE + INTERVAL '2 day',
+    'Confirmed',
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Запоріжжя Молл'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000003'
+    )
+),(
+    LOCALTIME + INTERVAL '2 hour',
+    CURRENT_DATE + INTERVAL '2 day',
+    'Confirmed',
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Львів Плаза'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000007'
+    )
+),(
+    LOCALTIME + INTERVAL '2 hour',
+    CURRENT_DATE + INTERVAL '2 day',
+    'Confirmed',
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Запоріжжя Молл'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000005'
+    )
+),(
+    LOCALTIME - INTERVAL '2 hour',
+    CURRENT_DATE + INTERVAL '2 day',
+    'Confirmed',
+    (
+        SELECT location_id 
+        FROM rest_manag.locations 
+        WHERE location_name = 'Харків Центральний'
+    ),
+    (
+        SELECT customer_id
+        FROM rest_manag.customers
+        WHERE phone_number = '+380000000006'
+    )
+);
+
+-- tables_reservation
+-- will automatically assign a table for a reservation based on the location
+-- cannot select a table which is reserved for +- 10 minutes from specific reservation time
+
+INSERT INTO rest_manag.tables_reservation (table_id, reservation_id) 
+	SELECT DISTINCT ON (r.reservation_id) t.table_id, r.reservation_id FROM rest_manag.tables 
+	AS t INNER JOIN  rest_manag.reservations AS r
+	ON t.location_id = r.location_id 
+	WHERE r.reservation_status = 'Confirmed' AND 
+	NOT EXISTS (
+		SELECT 1 FROM rest_manag.tables_reservation AS tr
+		INNER JOIN rest_manag.reservations AS res ON 
+		tr.reservation_id = res.reservation_id 
+		WHERE tr.table_id = t.table_id
+		AND res.reservation_date = r.reservation_date
+		AND res.reservation_status = 'Confirmed'
+		AND res.reservation_time BETWEEN
+		(r.reservation_time - interval '10 minutes') AND
+		(r.reservation_time + interval '10 minutes'));
+
+-- order_item 
+
+INSERT INTO rest_manag.order_item (
+    order_id, 
+    item_id, 
+    quantity
+) VALUES 
+(1, 2, 1),
+(1, 3, 1),
+(1, 4, 2),
+(2, 5, 2),
+(3, 4, 1),
+(3, 5, 3),
+(4, 6, 1),
+(4, 4, 3),
+(5, 5, 2),
+(5, 4, 2),
+(6, 4, 2),
+(7, 1, 1),
+(8, 2, 2),
+(9, 6, 2),
+(10, 8, 1);
+
+-- UPDATE example:
+-- set all outdated reservations which are not marked as seated as cancelled. (outdated is compared to current time with 5 min interval)
+
+UPDATE rest_manag.reservations SET reservation_status = 'Cancelled'
+WHERE reservation_status <> 'Seated' 
+AND reservation_status <> 'Cancelled' 
+AND (
+    
+    reservation_date < CURRENT_DATE 
+
+    OR (
+        reservation_date = CURRENT_DATE AND 
+        reservation_time  + interval '5 minutes' < CURRENT_TIME
+    )
+);
+
+
+
+-- DELETE example:
+-- delete reservation history older than month
+
+DELETE FROM rest_manag.reservations WHERE reservation_date < CURRENT_DATE - interval '1 month'; 
+
+-- DELETE example:
+-- delete history of cancelled or completed orders more then month ago 
+
+DELETE FROM rest_manag.orders WHERE order_status IN ('Cancelled', 'Completed') and CAST ( created_at AS DATE ) < CURRENT_DATE - interval '1 month';
+
+-- UPDATE example:
+-- update status of an exact order to Confirmed
+UPDATE rest_manag.orders SET order_status = 'Confirmed' WHERE order_number = 3;
+
+-- END Ivannikov Mykhailo
