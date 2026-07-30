@@ -291,8 +291,18 @@ INSERT INTO rest_manag.menu_ingredients (ingredient_id, item_id, quantity) VALUE
 (27, 18, 25);
 
 -- Location ingredients
--- This section will be completed after the Location table
--- and location_id values are added by another team member.
+INSERT INTO rest_manag.location_ingredients (location_id, ingredient_id, stock_quantity) VALUES 
+(1, 1, 2000),
+(2, 6, 600),
+(3, 8, 100),
+(4, 19, 3000),
+(5, 33, 220),
+(6, 31, 1000),
+(7, 7, 500),
+(8, 9, 800),
+(9, 15, 200),
+(10, 18, 600);
+
 
 --UPDATE examples
 UPDATE rest_manag.menu_items 
