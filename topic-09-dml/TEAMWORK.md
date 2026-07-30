@@ -8,7 +8,7 @@
 | Учасник | Роль у команді | Що зроблено | Артефакти / файли |
 |---|---|---|---|
 | Brytan Vitalii | Управління ресторанами та персоналом | Створено `INSERT`, `UPDATE`, та `DELETE` для таких таблиць як: locations, staff, shifts, staff_shifts | dml.sql, TEAMWORK.md |
-| ... | ... | ... | ... |
+| Shopiak Khrystyna | Меню та інгредієнти | Створено `INSERT`  для таких таблиць як: menu_categories, ingredients, menu_items, menu_ingredients, location_ingredients, location_ingredients для menu_items, menu_ingredients | dml.sql, TEAMWORK.md |
 | ... | ... | ... | ... |
 | ... | ... | ... | ... |
 
