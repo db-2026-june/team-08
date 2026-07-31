@@ -167,6 +167,136 @@ WITH CHECK OPTION;
 SELECT *
 FROM rest_manag.vegetarian_only;
 
+-- BUTRYN IVAN
+
+-- Horizontal View
+-- Displays ingredients in inventory and expiration date
+-- Helps to control safety of ingredients
+
+CREATE VIEW rest_manag.ingredient_control AS
+SELECT ingredient_id, expiration_date
+FROM rest_manag.inventory;
+
+SELECT *
+FROM rest_manag.ingredient_control;
+
+-- VERTICAL VIEW
+-- Displays only main information about suppliers
+-- Simplifies acces to the necessary info about supplier
+
+CREATE VIEW rest_manag.supplier_basic_info AS
+SELECT supplier_id, supplier_name, country
+FROM rest_manag.suppliers;
+
+SELECT *
+FROM rest_manag.supplier_basic_info;
+
+-- MIXED VIEW
+-- Displays expansive units
+-- Helps to control the most expansive orders of ingredients
+
+CREATE VIEW rest_manag.expensive_inventory AS
+SELECT ingredient_id, supplier_id, quantity, unit_cost
+FROM rest_manag.inventory
+WHERE unit_cost > 10;
+
+SELECT *
+FROM rest_manag.expensive_inventory;
+
+-- JOIN VIEW
+-- Displays the information combined about inventory and suppliers
+-- Helps us to control the suppliying and filling the inventory by specific supplier
+
+CREATE VIEW rest_manag.inventory_supplier_view AS
+SELECT
+    i.inventory_id,
+    s.supplier_name,
+    i.quantity,
+    i.unit_cost,
+    i.expiration_date
+FROM rest_manag.inventory i
+JOIN rest_manag.suppliers s
+ON i.supplier_id = s.supplier_id;
+
+SELECT *
+FROM rest_manag.inventory_supplier_view;
+
+-- SUBQUERY VIEW
+-- Displays suppliers with the avg price for unit 5+
+-- Helps us to control the expenses by suppliers
+
+CREATE VIEW rest_manag.expensive_suppliers AS
+SELECT *
+FROM rest_manag.suppliers
+WHERE supplier_id IN (
+    SELECT supplier_id
+    FROM rest_manag.inventory
+    GROUP BY supplier_id
+    HAVING AVG(unit_cost) > 5
+);
+
+SELECT *
+FROM rest_manag.expensive_suppliers;
+
+-- UNION VIEW
+-- Creates a unified contact directory
+-- Simplifies the way to contact with specific supplier
+
+CREATE VIEW rest_manag.supplier_contacts_directory AS
+
+SELECT
+    supplier_id,
+    supplier_name AS name,
+    NULL AS phone_number,
+    'Supplier' AS type
+FROM rest_manag.suppliers
+
+UNION
+
+SELECT
+    supplier_id,
+    contact_name AS name,
+    phone_number,
+    'Contact' AS type
+FROM rest_manag.supplier_contacts;
+
+SELECT *
+FROM rest_manag.supplier_contacts_directory;
+
+-- VIEW-FROM-VIEW
+-- Displays info about suppliers with the bigest quantity stock items
+-- Helps us to check for the high-stock suppliers
+
+CREATE VIEW rest_manag.high_stock_view AS
+SELECT
+    supplier_name,
+    quantity
+FROM rest_manag.inventory_supplier_view
+WHERE quantity > 100;
+
+SELECT *
+FROM rest_manag.high_stock_view;
+
+-- VIEW WITH CHECK OPTION
+-- Ceates the rull when the quantity must be higher then zero
+-- Helps us to avoid false negative quantities in inventory
+
+CREATE VIEW rest_manag.available_inventory AS
+SELECT
+    inventory_id,
+    ingredient_id,
+    quantity,
+    expiration_date
+FROM rest_manag.inventory
+WHERE quantity > 0
+WITH CHECK OPTION;
+
+SELECT *
+FROM rest_manag.available_inventory;
+
+-- END BUTRYN IVAN
+
+
 
 -- SHYSHKA TYMOFII
 
