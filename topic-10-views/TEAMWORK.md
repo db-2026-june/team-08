@@ -9,7 +9,7 @@
 | Учасник | Роль у команді | Що зроблено | Артефакти / файли |
 |---|---|---|---|
 |Shopiak Khrystyna|Меню та інгредієнти|Створення всіх типів views (horizontal, vertical, mixed, join, subquery, UNION, view-from-view, WITH CHECK OPTION), demo SELECT|views.sql, TEAMWORK.md|
-| Butryn Ivan | Інфентар та постачальники | horizontal, vertical, mixed, join, subquery, UNION, view-from-view, WITH CHECK OPTION views | views.sql, TEAMWORK.md |
+| Butryn Ivan | Інвентар та постачальники | horizontal, vertical, mixed, join, subquery, UNION, view-from-view, WITH CHECK OPTION views | views.sql, TEAMWORK.md |
 | ... | ... | ... | ... |
 | ... | ... | ... | ... |
 
