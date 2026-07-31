@@ -7,6 +7,7 @@
 ## Таблиця внесків
 
 | Учасник | Роль у команді | Що зроблено | Артефакти / файли |
+|---|---|---|---|
 |Shopiak Khrystyna|Меню та інгредієнти|Створення всіх типів views (horizontal, vertical, mixed, join, subquery, UNION, view-from-view, WITH CHECK OPTION), demo SELECT|views.sql, TEAMWORK.md|
 | ... | ... | ... | ... |
 | ... | ... | ... | ... |
