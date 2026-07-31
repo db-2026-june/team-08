@@ -210,7 +210,7 @@ SELECT
       location_id,
       rating,
       comment
-FROM rest.manag.reviews
+FROM rest_manag.reviews
 WHERE rating >= 4;
 
 SELECT *
@@ -258,3 +258,67 @@ WHERE rating > (
 
 SELECT *
 FROM rest_manag.above_average_reviews;
+
+-- UNION based View
+-- Combines positive and negative customer reviews into one view
+-- Each review is labeled according to its feedback category
+-- It helps restaurant staff quickly compare positive and negative feedback
+
+CREATE VIEW rest_manag.review_feedback_categories AS
+SELECT
+      review_id,
+      customer_id,
+      rating,
+      comment,
+      'Positive' AS feedback_category
+FROM rest_manag.reviews
+WHERE rating >= 4
+
+UNION
+
+SELECT 
+      review_id,
+      customer_id,
+      rating,
+      comment,
+      'Negative' AS feedback_category
+FROM rest_manag.reviews
+WHERE rating <= 2;
+
+SELECT *
+FROM rest_manag.review_feedback_categories;
+
+-- View based on another view
+-- Displays detailed information only about positive customer reviews
+-- It uses the previously created customer_review_details view and helps staff quickly analyze reviews with ratings of 4 or 5
+
+CREATE VIEW rest_manag.positive_review_details AS
+SELECT 
+      review_id,
+      first_name,
+      last_name,
+      location_name,
+      rating,
+      comment,
+      review_date
+FROM rest_manag.customer_review_details
+WHERE rating >= 4;
+
+SELECT *
+FROM rest_manag.positive_review_details;
+
+-- Updatable view with CHECK OPTION
+-- Displays only customers who have provided a phone number
+-- The WITH CHECK OPTION prevents inserting or updating customers through this view if their phone number is NULL
+
+CREATE VIEW rest_manag.customers_with_required_phone AS
+SELECT *
+FROM rest_manag.customers
+WHERE phone_number IS NOT NULL
+WITH CHECK OPTION;
+
+SELECT *
+FROM rest_manag.customers_with_required_phone;
+
+-- END SHYSHKA TYMOFII
+      
