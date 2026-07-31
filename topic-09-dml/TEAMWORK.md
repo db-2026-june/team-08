@@ -10,6 +10,7 @@
 | Brytan Vitalii | Управління ресторанами та персоналом | Створено `INSERT`, `UPDATE`, та `DELETE` для таких таблиць як: locations, staff, shifts, staff_shifts | dml.sql, TEAMWORK.md |
 | Shopiak Khrystyna | Меню та інгредієнти | Створено `INSERT`  для таких таблиць як: menu_categories, ingredients, menu_items, menu_ingredients, location_ingredients, location_ingredients та `UPDATE`  для menu_items, menu_ingredients | dml.sql, TEAMWORK.md |
 | Ivannikov Mykhailo | Замовлення та бронювання столиків | Створено `INSERT`, `UPDATE`, `DELETE` для таблиць orders, reservations, order_item, tables, tables_reservation  | dml.sql, TEAMWORK.md |
+| Butryn Ivan | Інвентар та постачальники | Створено `INSERT`, `UPDATE` для таких таблиць як: inventory, suppliers, supplier_contacts та `DELETE` для таблиці suppliers| dml.sql, TEAMWORK.md |
 | ... | ... | ... | ... |
 
 ## Контекст теми

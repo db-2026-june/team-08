@@ -328,6 +328,84 @@ WHERE item_id = 4;
 
 --END SHOPIAK KHRYSTYNA
 
+--BUTRYN IVAN
+--Suppliers
+INSERT INTO rest_manag.suppliers (supplier_id, supplier_name, country, city, street_address)
+VALUES
+(1, 'Baltic Trade Solutions', 'Germany', 'Berlin', 'Alexanderplatz 12'),
+(2, 'EuroFresh Supply', 'France', 'Paris', 'Rue de Rivoli 45'),
+(3, 'NovaDistribution Group', 'Ukraine', 'Kyiv', 'Khreshchatyk 22'),
+(4, 'Green Valley Foods', 'USA', 'Chicago', 'Michigan Avenue 150'),
+(5, 'Prime Logistics Partner', 'Poland', 'Warsaw', 'Marszałkowska 78'),
+(6, 'SilverLine Imports', 'Hungary', 'Budapest', 'Andrássy út 56'),
+(7, 'NorthStar Wholesale', 'USA', 'New York', 'Broadway 210'),
+(8, 'GlobalMarket Suppliers', 'Poland', 'Kraków', 'Floriańska 31'),
+(9, 'FreshWay Trading', 'Germany', 'Hamburg', 'Mönckebergstraße 18'),
+(10, 'Horizon Supply Chain', 'USA', 'Los Angeles', 'Sunset Boulevard 325'),
+(11, 'TradeSolution', 'USA', 'Washington', 'Sunrise Boulevard 999');
+
+--Inventory
+INSERT INTO rest_manag.inventory (
+    ingredient_id,
+    supplier_id,
+    location_id,
+    quantity,
+    unit_cost,
+    purchase_date,
+    expiration_date
+) VALUES
+(35, 1, 1, 25.00, 8.50, '2026-07-01', '2026-07-10'),
+(36, 2, 2, 15.00, 4.20, '2026-07-02', '2026-08-02'),
+(37, 3, 3, 40.00, 1.50, '2026-07-03', '2026-07-20'),
+(38, 4, 4, 20.00, 12.00, '2026-07-04', '2026-07-25'),
+(39, 5, 5, 18.00, 18.50, '2026-07-05', '2026-07-20'),
+(40, 6, 6, 30.00, 10.00, '2026-07-06', '2026-07-18'),
+(41, 7, 7, 22.00, 14.50, '2026-07-07', '2026-08-07'),
+(42, 8, 8, 35.00, 2.80, '2026-07-08', '2026-09-08'),
+(43, 9, 9, 28.00, 5.20, '2026-07-09', '2026-07-22'),
+(44, 10, 10, 16.00, 3.90, '2026-07-10', '2026-07-17');
+
+--Supplier_contacts
+
+INSERT INTO rest_manag.supplier_contacts (
+    supplier_id,
+    contact_name,
+    phone_number,
+    email
+) VALUES
+(1, 'Hans Mueller', '+49 301234567', 'h.mueller@baltictrade.com'),
+(2, 'Pierre Dubois', '+33 145678901', 'p.dubois@eurofresh.com'),
+(3, 'Oleksandr Kovalenko', '+380 671112233', 'o.kovalenko@novadistribution.ua'),
+(4, 'John Smith', '+1 3125550101', 'j.smith@greenvalleyfoods.com'),
+(5, 'Piotr Nowak', '+48 501234567', 'p.nowak@primelogistics.pl'),
+(6, 'Gabor Nagy', '+36 201112233', 'g.nagy@silverline.hu'),
+(7, 'Michael Johnson', '+1 2125550202', 'm.johnson@northstar.com'),
+(8, 'Anna Kowalska', '+48 502345678', 'a.kowalska@globalmarket.pl'),
+(9, 'Klaus Becker', '+49 401234567', 'k.becker@freshway.de'),
+(10, 'Emily Davis', '+1 3235550303', 'e.davis@horizonsupply.com');
+
+--UPDATE
+
+UPDATE rest_manag.suppliers
+SET street_address = 'Another Street 32'
+WHERE supplier_id = 3
+AND supplier_name = 'NovaDistribution Group';
+
+UPDATE rest_manag.inventory
+SET quantity = 1000
+WHERE ingredient_id = 35;
+
+UPDATE rest_manag.supplier_contacts
+SET email = 'example.mail@mail.com'
+WHERE supplier_id = 9
+AND contact_name = 'Klaus Becker';
+
+--DELETE 
+ DELETE FROM rest_manag.suppliers
+ WHERE supplier_id = 11;
+
+ --END BUTRYN IVAN
+
 
 -- SHYSHKA TYMOFII - customers and reviews
 -- Customers
