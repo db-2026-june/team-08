@@ -157,3 +157,120 @@ COMMIT;
 --Приклад видалення ролі та користувача
 --DROP USER patrik;
 --DROP ROLE barmen;
+
+
+-- SHYSHKA TYMOFII
+
+BEGIN;
+
+-- This role is used by customer support employees
+-- It allows them to manage customer contact information but it doesn't allow them to delete customer records
+CREATE ROLE customer_support_role NOLOGIN;
+
+-- This role is used by review moderators
+-- It allows them to manage reviews while customer information remains read-only
+CREATE ROLE review_moderator_role NOLOGIN;
+
+-- Access to the schema
+GRANT USAGE ON SCHEMA rest_manag
+TO customer_support_role;
+
+GRANT USAGE ON SCHEMA rest_manag
+TO review_moderator_role;
+
+-- =====================================================
+-- Role: customer_support_role
+--
+-- Purpose:
+-- Customer support employees manage customer contact information and can view customer reviews
+-- Allowed:
+-- SELECT, INSERT and UPDATE on customers
+-- SELECT on reviews
+--
+-- Restricted:
+-- Customer records cannot be deleted
+-- Reviews cannot be inserted, updated or deleted
+-- =====================================================
+GRANT SELECT, INSERT, UPDATE
+ON rest_manag.customers
+TO customer_support_role;
+
+GRANT SELECT
+ON rest_manag.reviews
+TO customer_support_role;
+
+-- Required for generating customer_id values because the customers table uses a bigserial primary key
+GRANT USAGE, SELECT
+ON SEQUENCE rest_manag.customers_customer_id_seq
+TO customer_support_role;
+
+-- =====================================================
+-- ROLE: review_moderator_role
+--
+-- Purpose:
+-- Review moderators verify and manage customer reviews
+--
+-- Allowed:
+-- SELECT on customers
+-- SELECT, INSERT, UPDATE and DELETE on reviews
+--
+-- Restricted:
+-- Customer information is read-only
+-- =====================================================
+
+GRANT SELECT 
+ON rest_manag.customers
+TO review_moderator_role;
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON rest_manag.reviews
+TO review_moderator_role;
+
+-- Required for generating review_id values because the reviews table uses a bigserial primary key
+GRANT USAGE, SELECT
+ON SEQUENCE rest_manag.reviews_review_id_seq
+TO review_moderator_role;
+
+--RESTRICTIONS
+
+-- Customer support must not delete customer records
+REVOKE DELETE
+ON rest_manag.customers
+FROM customer_support_role;
+
+-- Customer support can view reviews but cannot modify them
+REVOKE INSERT, UPDATE, DELETE
+ON rest_manag.reviews
+FROM customer_support_role;
+
+-- Review moderators can view customer information but cannot modify customer records
+REVOKE INSERT, UPDATE, DELETE
+ON rest_manag.customers
+FROM review_moderator_role;
+
+
+--USER CREATION
+
+-- This user can work with customers
+CREATE USER support_user
+WITH PASSWORD 'SupportUser2026!';
+
+GRANT customer_support_role
+TO support_user;
+
+-- This user moderates customer reviews
+CREATE USER moderator_user
+WITH PASSWORD 'ModeratorUser2026!';
+
+GRANT review_moderator_role
+TO moderator_user;
+
+COMMIT;
+
+-- Example of deleting users and roles
+-- DROP USER support_user;
+-- DROP USER moderator_user;
+-- DROP ROLE customer_support_role;
+-- DROP ROLE review_moderator_role;
+
+-- END SHYSHKA TYMOFII
