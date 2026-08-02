@@ -32,6 +32,80 @@
 
 -- Add your CREATE VIEW statements below this line
 
+--BRYTAN VITALII
+
+-- 1. Horizontal view
+-- Shows only basic staff information
+CREATE VIEW rest_manag.v_staff_basic AS
+SELECT staff_id, first_name, last_name
+FROM rest_manag.staff;
+
+
+-- 2. Vertical view
+-- Shows only currently active shifts
+CREATE VIEW rest_manag.v_active_shifts AS
+SELECT * FROM rest_manag.shifts
+WHERE CURRENT_TIMESTAMP BETWEEN start_datetime AND end_datetime;
+
+
+-- 3. Mixed view
+-- Shows only staff working at location 1
+CREATE VIEW rest_manag.v_location1_staff AS
+SELECT staff_id, first_name, last_name, staff_role
+FROM rest_manag.staff
+WHERE location_id = 1;
+
+
+-- 4. View with JOIN
+-- Shows staff together with their restaurant location
+CREATE VIEW rest_manag.v_staff_locations AS
+SELECT s.staff_id, s.first_name, s.last_name, s.staff_role, l.location_name, l.city, l.country
+FROM rest_manag.staff s
+JOIN rest_manag.locations l ON s.location_id = l.location_id;
+
+
+-- 5. View using a subquery
+-- Shows locations that have an employee with last name: 'Макаренко'
+CREATE VIEW rest_manag.v_makarenko AS
+SELECT location_id, location_name, city
+FROM rest_manag.locations
+WHERE location_id IN (
+    SELECT location_id FROM rest_manag.staff
+    WHERE last_name = 'Макаренко'
+);
+
+
+-- 6. View using UNION
+-- Combines managers and chefs into one list
+CREATE VIEW rest_manag.v_management_staff AS
+SELECT staff_id, first_name, last_name, 'Managers' AS category
+FROM rest_manag.staff
+WHERE staff_role = 'Менеджер'
+
+UNION
+
+SELECT staff_id, first_name, last_name, 'Chefs' AS category
+FROM rest_manag.staff
+WHERE staff_role = 'Шеф-кухар';
+
+
+-- 7. View based on another view
+-- Uses the v_management_staff and v_staff_locations views created earlier
+-- Shows cities of the 'management_staff' (managers and chefs).
+CREATE VIEW rest_manag.v_management_staff_cities AS
+SELECT v_ms.staff_id, v_ms.last_name, v_sl.city, v_sl.location_name
+FROM rest_manag.v_management_staff AS v_ms
+JOIN rest_manag.v_staff_locations AS v_sl ON v_ms.staff_id = v_sl.staff_id;
+
+
+-- 8. View with CHECK OPTION
+-- Allows updates only for staff assigned to location 1
+CREATE VIEW rest_manag.v_location1_editable AS
+SELECT * FROM rest_manag.staff
+WHERE location_id = 1
+WITH LOCAL CHECK OPTION;
+
+
 --SHOPIAK KHRYSTYNA
 --Horizontal View
 -- Відображає лише назву страви та її ціну.
