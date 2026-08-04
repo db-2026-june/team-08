@@ -30,7 +30,147 @@
 -- ================================================================
 
 -- Add your script below this line
+
+-- Brytan Vitalii
+
+BEGIN;
+
+-- Створення ролей
+CREATE ROLE manager_role;
+CREATE ROLE waiter_role;
+
+-- Доступ до схеми
+GRANT USAGE ON SCHEMA rest_manag TO manager_role;
+GRANT USAGE ON SCHEMA rest_manag TO waiter_role;
+
+-- =====================================================
+-- Роль: manager_role
+-- Призначення:
+-- Менеджер контролює роботу ресторану,
+-- координує персонал, замовлення,
+-- бронювання столиків та роботу закладу.
+--
+-- Таблиці:
+-- locations, staff, staff_shifts,
+-- shifts, orders, reservations,
+-- tables, customers.
+--
+-- Причина такого розподілу:
+-- Менеджеру потрібен доступ до
+-- інформації про працівників,
+-- клієнтів, бронювання та замовлення
+-- для ефективного керування
+-- роботою ресторану.
+--
+-- Безпекові міркування:
+-- Менеджер може переглядати та
+-- змінювати операційні дані, але не
+-- має доступу до зміни меню ресторану,
+-- інгредієнтів, складських запасів
+-- або інформації про постачальників,
+-- що зменшує ризик змін у виробничих даних.
+-- =====================================================
+
+
+GRANT SELECT, INSERT, UPDATE, DELETE -- DELETE Буде прибрано.
+ON TABLE
+    rest_manag.locations,
+    rest_manag.staff,
+    rest_manag.staff_shifts,
+    rest_manag.shifts,
+    rest_manag.orders,
+    rest_manag.reservations,
+    rest_manag.tables,
+    rest_manag.customers
+TO manager_role;
+
+REVOKE DELETE
+ON TABLE
+    rest_manag.locations,
+    rest_manag.staff,
+    rest_manag.staff_shifts,
+    rest_manag.shifts,
+    rest_manag.orders,
+    rest_manag.reservations,
+    rest_manag.tables,
+    rest_manag.customers
+FROM manager_role;
+
+
+-- =====================================================
+-- Роль: waiter_role
+-- Призначення:
+-- Офіціант працює із замовленнями,
+-- клієнтами, бронюваннями та меню.
+--
+-- Таблиці:
+-- menu_items, menu_categories,
+-- customers, reservations,
+-- tables, orders, order_item.
+--
+-- Причина такого розподілу:
+-- Офіціанту потрібен лише доступ до
+-- інформації, необхідної для
+-- обслуговування гостей та оформлення
+-- замовлень.
+--
+-- Безпекові міркування:
+-- Офіціант може створювати та
+-- редагувати замовлення, але не має
+-- доступу до даних персоналу,
+-- постачальників, складу чи інших
+-- адміністративних таблиць.
+-- =====================================================
+
+-- Перегляд меню, клієнтів та бронювань
+GRANT SELECT
+ON TABLE
+    rest_manag.menu_items,
+    rest_manag.menu_categories,
+    rest_manag.customers,
+    rest_manag.reservations,
+    rest_manag.tables
+TO waiter_role;
+
+-- Робота із замовленнями
+GRANT SELECT, INSERT, UPDATE, DELETE -- DELETE Буде прибрано.
+ON TABLE
+    rest_manag.orders,
+    rest_manag.order_item
+TO waiter_role;
+
+-- Заборонити видалення замовлень
+REVOKE DELETE
+ON TABLE
+    rest_manag.orders,
+    rest_manag.order_item
+FROM waiter_role;
+
+
+--USER CREATION
+
+CREATE USER manager_user
+WITH PASSWORD 'Manager123!';
+
+CREATE USER waiter_user
+WITH PASSWORD 'Waiter123!';
+
+GRANT manager_role TO manager_user;
+GRANT waiter_role TO waiter_user;
+
+
+-- Необов'язкове очищення після тестування
+
+-- DROP USER waiter_user;
+-- DROP USER manager_user;
+-- DROP ROLE waiter_role;
+-- DROP ROLE manager_role;
+
+COMMIT;
+
+
 --SHOPIAK KHRYSTYNA
+
 BEGIN;
 
 -- Створення ролей
