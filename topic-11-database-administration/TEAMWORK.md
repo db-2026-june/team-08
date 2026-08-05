@@ -7,8 +7,8 @@
 ## Таблиця внесків
 | Учасник | Роль у команді | Що зроблено | Артефакти / файли |
 |---|---|---|---|
+| Brytan Vitalii | 	Управління ресторанами та персоналом | Створення ролей: manager_role, waiter_role. Створення юзерів: manager_user, waiter_user. |database_administration.sql, TEAMWORK.md|
 |Shopiak Khrystyna|Меню та інгредієнти|Створення ролей: chef та barmen і користувачів, налаштування GRANT/REVOKE, права доступу до схеми, оформлення database_administration.sql|database_administration.sql, TEAMWORK.md|
-| ... | ... | ... | ... |
 | ... | ... | ... | ... |
 | ... | ... | ... | ... |
 
